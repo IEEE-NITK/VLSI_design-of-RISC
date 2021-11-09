@@ -1,2 +1,3 @@
 # VLSI_design-of-RISC
-IEEE Executive project for the year 2021-2022
+A Project by IEEE Diode on the designing of a RISC Processor with features like Branch predictors, Forwarding and implementing the physical design of the same on OpenLane.
+
