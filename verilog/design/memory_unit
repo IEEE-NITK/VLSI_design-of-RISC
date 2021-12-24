@@ -17,17 +17,17 @@ module  memory_unit(read_data, address, write_data, MemWrite, MemRead, clk);
   always@(*) begin
 
     if (MemRead==1'b1) begin 
-      read_data[7:0]   = Data_Memory[address];
-	    read_data[15:8]  = Data_Memory[address+1];
-	    read_data[23:16] = Data_Memory[address+2];
-      read_data[31:24] = Data_Memory[address+3]; 	
+    	read_data[7:0]   = Data_Memory[address];
+	read_data[15:8]  = Data_Memory[address+1];
+	read_data[23:16] = Data_Memory[address+2];
+        read_data[31:24] = Data_Memory[address+3]; 	
     end
     
     if (MemWrite==1'b1) begin
-	    Data_Memory[address]  = write_data[7:0];
-	    Data_Memory[address+1]= write_data[15:8];
-      Data_Memory[address+2]= write_data[23:16];
-	    Data_Memory[address+3]= write_data[31:24];  	
+ 	Data_Memory[address]  = write_data[7:0];
+	Data_Memory[address+1]= write_data[15:8];
+        Data_Memory[address+2]= write_data[23:16];
+	Data_Memory[address+3]= write_data[31:24];  	
     end
 
   end
