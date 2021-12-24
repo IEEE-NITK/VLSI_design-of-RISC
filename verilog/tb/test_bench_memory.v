@@ -20,14 +20,14 @@ module tb;
   initial begin
     #1  
     #10 address=10'b00001010; write_data=32'h000001;MemWrite=1'b1; MemRead=1'b0; //write data
-    #10  MemRead= 1'b1; MemWrite=1'b0; //read data
+    #10 MemRead= 1'b1; MemWrite=1'b0; //read data
     #10 MemWrite=1'b0; MemRead= 1'b1;
     #10 $finish;
   end
   
   initial begin
   	$dumpfile("dump.vcd"); 
-    $dumpvars;
+        $dumpvars;
   end
 
 endmodule
