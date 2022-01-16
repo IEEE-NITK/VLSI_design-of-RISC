@@ -1,16 +1,17 @@
-module WBStage (wb_control_signals, ReadData, AluResult, WriteReg, destination_reg, WriteData);
+module WBStage (WriteReg, WriteData, RegWrite, ReadData, AluResult, destination_reg, wb_control_signals);
     parameter word_size = 32;
     parameter reg_size = 5;
     
     output [word_size-1:0] WriteData;
     output [reg_size-1:0] WriteReg;
+    output RegWrite;
 
     input [1:0] wb_control_signals;
     input [word_size-1:0] ReadData;
     input [reg_size-1:0] destination_reg;
     input [word_size-1:0] AluResult;
 
-    wire RegWrite, MemtoReg;
+    wire MemtoReg;
     assign {RegWrite, MemtoReg} = wb_control_signals;
     assign WriteReg = destination_reg;
     

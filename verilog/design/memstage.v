@@ -1,4 +1,4 @@
-module MEMStage (Address, WriteData, AddResult, ReadData, mem_control_signals, wb_control_signals, zero, wb_control_signals_out, clk, AluResult_out, destination_reg, destination_reg_out);
+module MEMStage (ReadData, AluResult_out, destination_reg_out, wb_control_signals_out, AddResult, Address, zero, WriteData, destination_reg,  mem_control_signals, wb_control_signals, clk);
     parameter word_size = 32;
     parameter reg_size = 5;
 
@@ -17,7 +17,7 @@ module MEMStage (Address, WriteData, AddResult, ReadData, mem_control_signals, w
     input clk;
     
     wire MemRead, MemWrite, Branch;
-    wire Branch_out;
+    wire PCSrc;
     
     
     assign {MemRead, MemWrite, Branch} = mem_control_signals;
@@ -25,7 +25,7 @@ module MEMStage (Address, WriteData, AddResult, ReadData, mem_control_signals, w
     assign AluResult_out = Address;
     assign destination_reg_out = destination_reg;
     
-    and (Branch_out, Branch, zero);
+    and (PCSrc, Branch, zero);
 
     //instantiate module
     memory_unit MEM (ReadData, Address, WriteData,  MemWrite, MemRead, clk);

@@ -4,13 +4,14 @@ module tb;
     
     wire [word_size-1:0] WriteData;
     wire [reg_size-1:0] WriteReg;
+    wire RegWrite;
 
     reg [1:0] wb_control_signals;
     reg [word_size-1:0] ReadData;
     reg [reg_size-1:0] destination_reg;
     reg [word_size-1:0] AluResult;
     
-    WBStage uut (wb_control_signals, ReadData, AluResult, WriteReg, destination_reg, WriteData);
+    WBStage uut (WriteReg, WriteData, RegWrite, ReadData, AluResult, destination_reg, wb_control_signals);
 	
     initial begin
     #10 wb_control_signals = 2'b00; ReadData = 32'h16; destination_reg = 5'h02; AluResult = 32'h014;

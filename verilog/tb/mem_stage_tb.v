@@ -18,7 +18,7 @@ module tb;
     reg clk;
 
  
-    MEMStage uut (Address, WriteData, AddResult, ReadData, mem_control_signals, wb_control_signals, zero, wb_control_signals_out,clk,AluResult_out,destination_reg,destination_reg_out);
+    MEMStage uut (ReadData, AluResult_out, destination_reg_out, wb_control_signals_out, AddResult, Address, zero, WriteData, destination_reg,  mem_control_signals, wb_control_signals, clk);
     initial
     begin
     clk=0;
