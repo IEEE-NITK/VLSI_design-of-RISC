@@ -51,6 +51,9 @@ module tb;
     PCSrc = 0;
     
     #10
+    PCSrc = 1;
+    
+    #10
     $finish;
     
   end

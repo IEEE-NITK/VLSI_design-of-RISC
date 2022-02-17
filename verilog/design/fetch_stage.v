@@ -18,10 +18,10 @@ module fetch_unit (instruction, PC_next_normal, PC_next_branch, PCSrc, start, cl
   mux_2 mux_fetch (mux_out, PC_next_normal, PC_next_branch, PCSrc);
   defparam mux_fetch.word_size = 32;
   
-  Register_Unit PC (reg_out, mux_out, 1'b1, clk, rst);
-  
-  mux_2 mux_start (inst_address, reg_out, start_address, start);
+  mux_2 mux_start (reg_out, mux_out, start_address, start);
   defparam mux_start.word_size = 32;
+  
+  Register_Unit PC (inst_address, reg_out, 1'b1, clk, rst);
   
   carry_select_32bit CSA_fetch (PC_next_normal, cout, inst_address, 32'd4, 1'b0);
   
