@@ -45,10 +45,6 @@ Immediate arithmetic and load/store instructions
 -Constant: -2 ^15 to +2 ^15 
 -Address: offset added to base address in rs
 
-### Jump Addressing
-Jump ( j and jal ) targets could be anywhere in text
-segment
-
 ### Encode full address in instruction
  ![image](https://user-images.githubusercontent.com/78913275/163660400-58eb43c9-0b8f-4083-b640-659a8a76c4b2.png)
 
@@ -134,7 +130,50 @@ and SoC integration is  Adding IO pads, floor planning the chip using other hard
 ![image](https://user-images.githubusercontent.com/78913275/163660633-28c1df57-3a26-4316-90d2-6e08dfd0d8c4.png)
 
 This is the OpenLane Macro Hardening basic flow
-![image](https://user-images.githubusercontent.com/78913275/163660639-6722320b-4cca-49c0-82c0-ccb280ee09ea.png)
+![image](https://user-images.githubusercontent.com/78913275/163672441-9164b36c-2363-4846-95ce-2991964eaa2a.png)
+OpenLane flow consists of several stages. By default all flow steps are run in sequence. Each stage may consist of multiple sub-stages. OpenLane can also be run interactively as shown here.
+### 1. Synthesis
+  i. yosys - Performs RTL synthesis
+
+  ii. abc - Performs technology mapping
+
+  iii. OpenSTA - Performs static timing analysis on the resulting netlist to generate timing reports
+### 2. Floorplan and PDN
+  i. init_fp - Defines the core area for the macro as well as the rows (used for placement) and the tracks (used for routing)
+  
+  ii. ioplacer - Places the macro input and output ports
+  
+  iii. pdn - Generates the power distribution network
+  
+  iv. tapcell - Inserts welltap and decap cells in the floorplan
+### 3. Placement
+  i. RePLace - Performs global placement
+  
+  ii. Resizer - Performs optional optimizations on the design
+  
+  iii. OpenDP - Perfroms detailed placement to legalize the globally placed components
+### 4. CTS
+  i. TritonCTS - Synthesizes the clock distribution network (the clock tree)
+### 5. Routing
+  i. FastRoute - Performs global routing to generate a guide file for the detailed router
+  
+  ii. CU-GR - Another option for performing global routing.
+  
+  iii. TritonRoute - Performs detailed routing
+  
+  iv. SPEF-Extractor - Performs SPEF extraction
+### 6. GDSII Generation
+  i. Magic - Streams out the final GDSII layout file from the routed def
+
+  ii. Klayout - Streams out the final GDSII layout file from the routed def as a back-up
+### 7. Checks
+  i. Magic - Performs DRC Checks & Antenna Checks
+
+  ii. Klayout - Performs DRC Checks
+
+  iii. Netgen - Performs LVS Checks
+
+  iv. CVC - Performs Circuit Validity Check
 
 Before running the whole design we are expected to perform synthesis exploration of the design. Which is the process of getting different netists using different synthesis strategies.
 ![image](https://user-images.githubusercontent.com/78913275/163660647-c1b291e5-16c0-4f27-a9c2-0536768f5b13.png)
